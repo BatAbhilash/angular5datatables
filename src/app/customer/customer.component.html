@@ -1,0 +1,26 @@
+<table>
+  <tr>
+    <th>CustomerID</th>
+    <th>ContactName</th>
+    <th>ContactTitle</th>
+    <th>CompanyName</th>
+    <th>Country</th>
+    <th>City</th>
+    <th>Address</th>
+    <th>PostalCode</th>
+  </tr>
+
+  
+  <tr *ngFor="let customer of customers">
+      <th>{{customer.customerID}}</th>
+      <th>{{customer.contactName}}</th>
+      <th>{{customer.contactTitle}}</th>
+      <th>{{customer.companyName}}</th>
+      <th>{{customer.country}}</th>
+      <th>{{customer.city}}</th>
+      <th>{{customer.address}}</th>
+      <th>{{customer.postalCode}}</th>    
+  </tr>
+
+</table>
+  
