@@ -7,11 +7,14 @@ import { AppComponent } from './app.component';
 import { CustomerComponent } from './customer/customer.component';
 import { CustomerService }  from './customer.service';
 import { AppRoutingModule } from './/app-routing.module';
+import { DatagridComponent } from './datagrid/datagrid.component';
+import { DatagridService } from './datagrid.service';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CustomerComponent
+    CustomerComponent,
+    DatagridComponent
   ],
   imports: [
     BrowserModule,
@@ -19,7 +22,7 @@ import { AppRoutingModule } from './/app-routing.module';
     HttpClientModule,
     FormsModule
   ],
-  providers: [CustomerService],
+  providers: [CustomerService, DatagridService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
