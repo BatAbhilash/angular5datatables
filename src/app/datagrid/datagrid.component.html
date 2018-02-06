@@ -1,3 +1,12 @@
-<p>
-  datagrid works!
-</p>
+<div class="container">
+  <table class="table">
+    <tr>
+      <th *ngFor="let headers of tableContent.headers"> {{headers}} </th>
+    </tr>
+
+    <tr *ngFor="let contents of tableContent.data">
+        <td *ngFor="let headers of tableContent.headers"> {{contents[headers]}} </td>
+    </tr>
+
+  </table>
+</div>
