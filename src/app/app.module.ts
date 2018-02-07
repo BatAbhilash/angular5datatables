@@ -5,16 +5,19 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { CustomerComponent } from './customer/customer.component';
-import { CustomerService }  from './customer.service';
+import { CustomerService } from './customer.service';
 import { AppRoutingModule } from './/app-routing.module';
 import { DatagridComponent } from './datagrid/datagrid.component';
 import { DatagridService } from './datagrid.service';
+import { OrderByPipe } from './directives/orderby.pipe';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     CustomerComponent,
-    DatagridComponent
+    DatagridComponent,
+    OrderByPipe
   ],
   imports: [
     BrowserModule,
@@ -22,7 +25,7 @@ import { DatagridService } from './datagrid.service';
     HttpClientModule,
     FormsModule
   ],
-  providers: [CustomerService, DatagridService],
+  providers: [CustomerService, DatagridService, OrderByPipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
