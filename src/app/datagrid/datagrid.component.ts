@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Customer } from '../customer'
+import { Customer } from '../customer';
+import { TableContent } from '../tablecontent';
 
 @Component({
   selector: 'app-datagrid',
@@ -7,16 +8,11 @@ import { Customer } from '../customer'
   styleUrls: ['./datagrid.component.css']
 })
 export class DatagridComponent implements OnInit {
-  
-  @Input() tableContent: {
-    headers: string[],
-    data: any[],
-  };
+  @Input() tableContent: TableContent;
 
   constructor() { }
 
   ngOnInit() {
-    
   }
 
 }

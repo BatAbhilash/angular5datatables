@@ -11,7 +11,3 @@ export class Customer {
     phone: string;
     fax: string;
   }
-
-  export class JsonResult{
-    response : string;
-  }
