@@ -4,16 +4,31 @@
       <input type="text" [(ngModel)]="searchText" class="form-control" placeholder="Search Items" />
     </div>
   </div>
-  <div class="table-responsive" *ngIf="tableContent!= null">
+  <div class="table-responsive" *ngIf="tableFields!= null">
     <table class="table">
       <tr>
-        <th class="pointer" *ngFor="let headers of tableContent.headers" (click)="sortColumn(headers.id)"> {{headers.name}} </th>
+        <th class="pointer" *ngFor="let headers of tableFields.headers" (click)="sortColumn(headers.id)"> {{headers.name}} </th>
       </tr>
 
-      <tr *ngFor="let contents of tableContent.data | category : searchText">
-        <td *ngFor="let headers of tableContent.headers"> {{contents[headers.id]}} </td>
+      <tr *ngFor="let contents of tableFields.data | category : searchText">
+        <td *ngFor="let headers of tableFields.headers"> {{contents[headers.id]}} </td>
       </tr>
 
     </table>
   </div>
+
+  <div class="pagination" *ngIf="count > 0">
+    <div class="description">
+      <span class="page-counts">{{ getMin() }} - {{ getMax() }} of {{ count }}</span>
+      <span class="page-totals">{{ totalPages() }} pages</span>
+    </div>
+    <div class="numbers">
+      <button class="link" (click)="onPrev()" [disabled]="page === 1 || loading" [ngClass]="{ 'disabled': page === 1 || loading }">&lt; Previous</button>
+
+      <button *ngFor="let pageNum of getPages()" (click)="onPage(pageNum)" [ngClass]="{'active': pageNum === page, 'disabled': loading}">{{ pageNum }}</button>
+
+      <button class="link" (click)="onNext(true)" [disabled]="lastPage() || loading" [ngClass]="{ 'disabled': lastPage() || loading }">Next &gt;</button>
+    </div>
+  </div>
+
 </div>

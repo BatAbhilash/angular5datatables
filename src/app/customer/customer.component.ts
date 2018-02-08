@@ -15,6 +15,7 @@ export class CustomerComponent implements OnInit {
   tableContent: TableContent = {
     headers: null,
     data: null,
+    totalRecords: 0
   };
 
   constructor(private customerService: CustomerService) { }
@@ -35,9 +36,10 @@ export class CustomerComponent implements OnInit {
       { 'id': 'postalCode', 'name': 'PIN' },
     ];
     this.customerService.getCustomers().subscribe(
-      customer => {
-        this.tableContent.data = customer;
-        console.log(customer);
+      res => {
+        this.tableContent.data = res;
+        this.tableContent.totalRecords = res.length;
+        console.log(res.length);
       }
     );
   }
