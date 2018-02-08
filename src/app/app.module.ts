@@ -10,14 +10,15 @@ import { AppRoutingModule } from './/app-routing.module';
 import { DatagridComponent } from './datagrid/datagrid.component';
 import { DatagridService } from './datagrid.service';
 import { OrderByPipe } from './directives/orderby.pipe';
-
+import { SearchCategory } from './directives/searchcategory.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     CustomerComponent,
     DatagridComponent,
-    OrderByPipe
+    OrderByPipe,
+    SearchCategory
   ],
   imports: [
     BrowserModule,
@@ -25,7 +26,7 @@ import { OrderByPipe } from './directives/orderby.pipe';
     HttpClientModule,
     FormsModule
   ],
-  providers: [CustomerService, DatagridService, OrderByPipe],
+  providers: [CustomerService, DatagridService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

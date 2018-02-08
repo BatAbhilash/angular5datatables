@@ -4,13 +4,13 @@
       <input type="text" [(ngModel)]="searchText" class="form-control" placeholder="Search Items" />
     </div>
   </div>
-  <div class="table-responsive">
+  <div class="table-responsive" *ngIf="tableContent!= null">
     <table class="table">
       <tr>
         <th class="pointer" *ngFor="let headers of tableContent.headers" (click)="sortColumn(headers.id)"> {{headers.name}} </th>
       </tr>
 
-      <tr *ngFor="let contents of tableContent.data">
+      <tr *ngFor="let contents of tableContent.data | category : searchText">
         <td *ngFor="let headers of tableContent.headers"> {{contents[headers.id]}} </td>
       </tr>
 

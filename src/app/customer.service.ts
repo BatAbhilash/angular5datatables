@@ -13,13 +13,10 @@ const httpOptions = {
 @Injectable()
 export class CustomerService {
 
-  private customerUrl = 'http://localhost:50565/api/Customer'; 
-
+  private customerUrl = 'http://localhost:50565/api/Customer';
   constructor(private http: HttpClient) { }
 
-  getCustomers() : Observable<Customer[]>{
+  getCustomers(): Observable<Customer[]> {
     return this.http.get<Customer[]>(this.customerUrl).pipe();
   }
-  
-
 }
