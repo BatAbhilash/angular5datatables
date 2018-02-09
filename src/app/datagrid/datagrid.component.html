@@ -3,6 +3,12 @@
     <div class="col-md-6">
       <input type="text" [(ngModel)]="searchText" class="form-control" placeholder="Search Items" />
     </div>
+
+    <div class="col-md-3">
+    <select (change)="getDisplayRecords()" [(ngModel)]="perPage">
+        <option *ngFor="let pSize of pageSizes" [ngValue]="pSize[1]">{{pSize[0]}}</option>
+      </select>
+    </div>
   </div>
   <div class="table-responsive" *ngIf="tableFields!= null">
     <table class="table">
@@ -17,10 +23,10 @@
     </table>
   </div>
 
-  <div class="pagination" *ngIf="count > 0">
+  <div class="pagination" *ngIf="count > 0 && !searchText && limit!=count">
     <div class="description">
-      <span class="page-counts">{{ getMin() }} - {{ getMax() }} of {{ count }}</span>
-      <span class="page-totals">{{ totalPages() }} pages</span>
+      <span class="page-counts">{{ minPageNum }} - {{ maxPageNum }} of {{ count }}</span>
+      <span class="page-totals">{{ totalPageNum }} pages</span>
     </div>
     <div class="numbers">
       <button class="link" (click)="onPrev()" [disabled]="page === 1 || loading" [ngClass]="{ 'disabled': page === 1 || loading }">&lt; Previous</button>
@@ -28,6 +34,7 @@
       <button *ngFor="let pageNum of getPages()" (click)="onPage(pageNum)" [ngClass]="{'active': pageNum === page, 'disabled': loading}">{{ pageNum }}</button>
 
       <button class="link" (click)="onNext(true)" [disabled]="lastPage() || loading" [ngClass]="{ 'disabled': lastPage() || loading }">Next &gt;</button>
+
     </div>
   </div>
 

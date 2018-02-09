@@ -26,14 +26,13 @@ export class DatagridComponent implements OnInit, OnChanges {
   loading: boolean;
   pagesToShow: number;
   total: number;
-  limit: number;
+  pageSizes: any;
+  minPageNum: number;
+  maxPageNum: number;
+  totalPageNum: number;
 
   // original records
   tableFields: TableContent;
-
-  // @Output() goPrev = new EventEmitter<boolean>();
-  // @Output() goNext = new EventEmitter<boolean>();
-  // @Output() goPage = new EventEmitter<number>();
 
   constructor(private orderByPipe: OrderByPipe, private searchCategory: SearchCategory) { }
 
@@ -42,12 +41,13 @@ export class DatagridComponent implements OnInit, OnChanges {
     this.perPage = 20;
     this.pagesToShow = 3;
     this.loading = false;
-    this.limit = 20;
   }
 
   ngOnChanges() {
     this.tableFields = Object.assign({}, this.tableContent);
-    this.getRecords();
+    this.pageSizes = [['5', '5'] , ['10', 10], ['25', 25], ['50', 50], [ 'All', this.count]];
+    // this.getRecords();
+    this.getDisplayRecords();
   }
 
   sortColumn(sortColName: string) {
@@ -58,16 +58,18 @@ export class DatagridComponent implements OnInit, OnChanges {
 
   // pagination
 
-  getMin(): number {
-    return ((this.perPage * this.page) - this.perPage) + 1;
+  getMin(): void {
+    this.minPageNum = ((this.perPage * this.page) - this.perPage) + 1;
+    // return ((this.perPage * this.page) - this.perPage) + 1;
   }
 
-  getMax(): number {
+  getMax(): void {
     let max = this.perPage * this.page + 1;
     if (max > this.count) {
       max = this.count;
     }
-    return max;
+    this.maxPageNum = max;
+//    return max;
   }
 
   onPage(n: number): void {
@@ -85,8 +87,10 @@ export class DatagridComponent implements OnInit, OnChanges {
     this.getRecords();
   }
 
-  totalPages(): number {
-    return Math.ceil(this.count / this.perPage) || 0;
+  totalPages(): void {
+    console.log('asdfdsa');
+    this.totalPageNum = Math.ceil(this.count / this.perPage) || 0;
+    // return Math.ceil(this.count / this.perPage) || 0;
   }
 
   lastPage(): boolean {
@@ -118,11 +122,18 @@ export class DatagridComponent implements OnInit, OnChanges {
 
   getRecords(): void {
     this.loading = true;
-    const startIndex = (this.page - 1) * this.limit;
-    const fetchRecords = startIndex + this.limit;
+    const startIndex = (this.page - 1) * this.perPage;
+    const fetchRecords = startIndex + this.perPage;
     this.tableFields.data = this.tableContent.data.slice(startIndex, fetchRecords);
     this.total = this.tableFields.data.length;
     this.loading = false;
+  }
+
+  getDisplayRecords(): void {
+    this.getMin();
+    this.getMax();
+    this.totalPages();
+    this.getRecords();
   }
 
 }
