@@ -53,7 +53,7 @@ export class DatagridComponent implements OnInit, OnChanges {
   sortColumn(sortColName: string) {
     this.isDesc = !this.isDesc;
     const direction = this.isDesc ? 1 : -1;
-    this.orderByPipe.transform(this.tableContent.data, { 'property': sortColName, 'direction': direction });
+    this.orderByPipe.transform(this.tableFields.data, { 'property': sortColName, 'direction': direction });
   }
 
   // pagination
