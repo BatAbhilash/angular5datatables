@@ -45,7 +45,7 @@
     </table>
   </div>
 
-  <div class="pagination" *ngIf="count > 0 && !searchText && limit!=count">
+  <div class="pagination" *ngIf="count > 0 && !searchText && perPage!=count">
     <div class="description">
       <span class="page-counts">{{ minPageNum }} - {{ maxPageNum }} of {{ count }}</span>
       <span class="page-totals">{{ totalPageNum }} pages</span>

@@ -38,8 +38,8 @@ export class DatagridComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.page = 1;
-    this.perPage = 20;
-    this.pagesToShow = 3;
+    this.perPage = 25;
+    this.pagesToShow = 2;
     this.loading = false;
   }
 
@@ -47,13 +47,14 @@ export class DatagridComponent implements OnInit, OnChanges {
     this.tableFields = Object.assign({}, this.tableContent);
     this.pageSizes = [['5', '5'] , ['10', 10], ['25', 25], ['50', 50], [ 'All', this.count]];
     // this.getRecords();
-    this.getDisplayRecords();
+    this.getRecords();
   }
 
   sortColumn(sortColName: string, hasChildren: string): void {
     if (hasChildren) {
         return;
     }
+    console.log(sortColName);
     this.isDesc = !this.isDesc;
     const direction = this.isDesc ? 1 : -1;
     this.orderByPipe.transform(this.tableFields.data, { 'property': sortColName, 'direction': direction });
@@ -126,6 +127,9 @@ export class DatagridComponent implements OnInit, OnChanges {
     if (!this.tableContent) {
       return;
     }
+    this.getMin();
+    this.getMax();
+    this.totalPages();
     this.loading = true;
     const startIndex = (this.page - 1) * this.perPage;
     const fetchRecords = startIndex + this.perPage;
@@ -135,9 +139,7 @@ export class DatagridComponent implements OnInit, OnChanges {
   }
 
   getDisplayRecords(): void {
-    this.getMin();
-    this.getMax();
-    this.totalPages();
+    this.page = 1;
     this.getRecords();
   }
 
