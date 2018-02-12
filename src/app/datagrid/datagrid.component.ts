@@ -54,7 +54,6 @@ export class DatagridComponent implements OnInit, OnChanges {
     if (hasChildren) {
         return;
     }
-    console.log(sortColName);
     this.isDesc = !this.isDesc;
     const direction = this.isDesc ? 1 : -1;
     this.orderByPipe.transform(this.tableFields.data, { 'property': sortColName, 'direction': direction });
@@ -68,7 +67,7 @@ export class DatagridComponent implements OnInit, OnChanges {
   }
 
   getMax(): void {
-    let max = this.perPage * this.page + 1;
+    let max = this.perPage * this.page ;
     if (max > this.count) {
       max = this.count;
     }
@@ -132,7 +131,7 @@ export class DatagridComponent implements OnInit, OnChanges {
     this.totalPages();
     this.loading = true;
     const startIndex = (this.page - 1) * this.perPage;
-    const fetchRecords = startIndex + this.perPage;
+    const fetchRecords = Number(startIndex) + Number(this.perPage);
     this.tableFields.data = this.tableContent.data.slice(startIndex, fetchRecords);
     this.total = this.tableFields.data.length;
     this.loading = false;
