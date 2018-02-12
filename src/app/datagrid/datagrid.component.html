@@ -1,11 +1,12 @@
 <div class="container">
-  <div class="form-group">
+  <div class="row form-group">
     <div class="col-md-6">
       <input type="text" [(ngModel)]="searchText" class="form-control" placeholder="Search Items" />
     </div>
 
     <div class="col-md-3">
-    <select (change)="getDisplayRecords()" [(ngModel)]="perPage">
+      <select (change)="getDisplayRecords()" [(ngModel)]="perPage">
+          <option value="" selected disabled>Choose here</option>
         <option *ngFor="let pSize of pageSizes" [ngValue]="pSize[1]">{{pSize[0]}}</option>
       </select>
     </div>
@@ -13,11 +14,32 @@
   <div class="table-responsive" *ngIf="tableFields!= null">
     <table class="table">
       <tr>
-        <th class="pointer" *ngFor="let headers of tableFields.headers" (click)="sortColumn(headers.id)"> {{headers.name}} </th>
+        <th class="pointer" *ngFor="let headers of tableFields.headers" (click)="sortColumn(headers.id, headers.hasChildren)"> {{headers.name}} 
+          <p *ngIf="headers.hasChildren">  
+          <th *ngFor="let childHeader of headers.children"> {{childHeader.name}} </th>
+          </p>
+        </th>
+        
       </tr>
 
+      <!-- <tr>
+        <th *ngFor="let headers of tableFields.headers" (click)="sortColumn(headers.id)">
+          <input type="text" (click)="searchByColumnId(headers.id)" class="form-control" placeholder="Search Items" />
+        </th>
+      </tr> -->
+
+
       <tr *ngFor="let contents of tableFields.data | category : searchText">
-        <td *ngFor="let headers of tableFields.headers"> {{contents[headers.id]}} </td>
+        <td *ngFor="let headers of tableFields.headers">
+          <p *ngIf="!headers.hasChildren"> {{contents[headers.id]}} </p>
+          
+          <p *ngIf="headers.hasChildren">
+            <td *ngFor="let childHeader of headers.children; let i = index">
+              {{contents[headers.id][i][childHeader.id] }}
+            </td>
+          </p>
+
+        </td>
       </tr>
 
     </table>

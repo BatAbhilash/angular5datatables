@@ -50,7 +50,10 @@ export class DatagridComponent implements OnInit, OnChanges {
     this.getDisplayRecords();
   }
 
-  sortColumn(sortColName: string) {
+  sortColumn(sortColName: string, hasChildren: string): void {
+    if (hasChildren) {
+        return;
+    }
     this.isDesc = !this.isDesc;
     const direction = this.isDesc ? 1 : -1;
     this.orderByPipe.transform(this.tableFields.data, { 'property': sortColName, 'direction': direction });
@@ -88,7 +91,6 @@ export class DatagridComponent implements OnInit, OnChanges {
   }
 
   totalPages(): void {
-    console.log('asdfdsa');
     this.totalPageNum = Math.ceil(this.count / this.perPage) || 0;
     // return Math.ceil(this.count / this.perPage) || 0;
   }
@@ -121,6 +123,9 @@ export class DatagridComponent implements OnInit, OnChanges {
   }
 
   getRecords(): void {
+    if (!this.tableContent) {
+      return;
+    }
     this.loading = true;
     const startIndex = (this.page - 1) * this.perPage;
     const fetchRecords = startIndex + this.perPage;
@@ -135,5 +140,9 @@ export class DatagridComponent implements OnInit, OnChanges {
     this.totalPages();
     this.getRecords();
   }
+
+  // searchByColumnId(searchColumnId: string): void {
+  //   this.orderByPipe.transform(this.tableFields.data, { 'property': searchColumnId, 'direction': direction });
+  // }
 
 }

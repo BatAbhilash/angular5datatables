@@ -34,12 +34,26 @@ export class CustomerComponent implements OnInit {
       { 'id': 'city', 'name': 'City' },
       { 'id': 'address', 'name': 'Address' },
       { 'id': 'postalCode', 'name': 'PIN' },
+      {
+        'id': 'parentCol', 'name': 'Parent', 'hasChildren': true,
+        'children': [
+          { 'id': 'child1', 'name': 'child1' },
+          { 'id': 'child2', 'name': 'child2' },
+          { 'id': 'child3', 'name': 'child3' },
+        ]
+      },
     ];
     this.customerService.getCustomers().subscribe(
       res => {
         this.tableContent.data = res;
         this.tableContent.totalRecords = res.length;
-        console.log(res.length);
+        for (let i = 0; i <= res.length; i++) {
+          this.tableContent.data[i]['parentCol'] = [
+            { 'child1': 'Child1' },
+            { 'child2': 'Child2' },
+            { 'child3': 'Child3' },
+          ];
+        }
       }
     );
   }
