@@ -3,12 +3,13 @@ import { Customer } from '../customer';
 import { TableContent } from '../tablecontent';
 import { OrderByPipe } from '../directives/orderby.pipe';
 import { SearchCategory } from '../directives/searchcategory.pipe';
+import { SearchByCategory } from '../directives/searchbycategory.pipe';
 
 @Component({
   selector: 'app-datagrid',
   templateUrl: './datagrid.component.html',
   styleUrls: ['./datagrid.component.css'],
-  providers: [OrderByPipe, SearchCategory]
+  providers: [OrderByPipe, SearchCategory, SearchByCategory]
 })
 export class DatagridComponent implements OnInit, OnChanges {
   @Input() tableContent: TableContent;
@@ -34,7 +35,7 @@ export class DatagridComponent implements OnInit, OnChanges {
   // original records
   tableFields: TableContent;
 
-  constructor(private orderByPipe: OrderByPipe, private searchCategory: SearchCategory) { }
+  constructor(private orderByPipe: OrderByPipe, private searchCategory: SearchCategory, private searchByCategory: SearchByCategory) { }
 
   ngOnInit() {
     this.page = 1;
@@ -45,19 +46,22 @@ export class DatagridComponent implements OnInit, OnChanges {
 
   ngOnChanges() {
     this.tableFields = Object.assign({}, this.tableContent);
-    this.pageSizes = [['5', '5'] , ['10', 10], ['25', 25], ['50', 50], [ 'All', this.count]];
+    this.pageSizes = [['5', '5'], ['10', 10], ['25', 25], ['50', 50], ['All', this.count]];
     // this.getRecords();
     this.getRecords();
   }
 
-  sortColumn(sortColName: string, hasChildren: string): void {
-    if (hasChildren) {
-        return;
-    }
+  sortColumn(sortColName: string, childColName?: string, index?: number): void {
     this.isDesc = !this.isDesc;
     const direction = this.isDesc ? 1 : -1;
-    this.orderByPipe.transform(this.tableFields.data, { 'property': sortColName, 'direction': direction });
+    if (childColName) {
+       this.orderByPipe.transform(this.tableFields.data, { 'property': sortColName, 'direction': direction,
+        'childProperty': childColName, 'index': index });
+    } else {
+      this.orderByPipe.transform(this.tableFields.data, { 'property': sortColName, 'direction': direction });
+    }
   }
+
 
   // pagination
 
@@ -67,12 +71,12 @@ export class DatagridComponent implements OnInit, OnChanges {
   }
 
   getMax(): void {
-    let max = this.perPage * this.page ;
+    let max = this.perPage * this.page;
     if (max > this.count) {
       max = this.count;
     }
     this.maxPageNum = max;
-//    return max;
+    //    return max;
   }
 
   onPage(n: number): void {
@@ -142,8 +146,9 @@ export class DatagridComponent implements OnInit, OnChanges {
     this.getRecords();
   }
 
-  // searchByColumnId(searchColumnId: string): void {
-  //   this.orderByPipe.transform(this.tableFields.data, { 'property': searchColumnId, 'direction': direction });
-  // }
+  searchByColumnId(searchColumnId: string, searchText: string): void {
+    console.log(searchText);
+    // this.searchbyCategory.transform(this.tableFields.data, { 'property': searchColumnId });
+  }
 
 }

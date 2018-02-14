@@ -14,25 +14,32 @@
   <div class="table-responsive" *ngIf="tableFields!= null">
     <table class="table">
       <tr>
-        <th class="pointer" *ngFor="let headers of tableFields.headers" (click)="sortColumn(headers.id, headers.hasChildren)"> {{headers.name}} 
-          <p *ngIf="headers.hasChildren">  
-          <th *ngFor="let childHeader of headers.children"> {{childHeader.name}} </th>
+        <th class="pointer" *ngFor="let headers of tableFields.headers" >
+          
+          <p *ngIf="!headers.hasChildren" (click)="sortColumn(headers.id)">
+            {{headers.name}}
           </p>
+          
+          <p *ngIf="headers.hasChildren">
+              {{headers.name}}
+              <th *ngFor="let childHeader of headers.children; let id = index" (click)="sortColumn(headers.id, childHeader.id, id)"> {{childHeader.name}} </th>
+          </p>
+          
         </th>
-        
-      </tr>
 
-      <!-- <tr>
-        <th *ngFor="let headers of tableFields.headers" (click)="sortColumn(headers.id)">
-          <input type="text" (click)="searchByColumnId(headers.id)" class="form-control" placeholder="Search Items" />
-        </th>
+      </tr>
+      <!-- 
+      <tr>
+        <td *ngFor="let headers of tableFields.headers; let i = index">
+          <input type="text" [(ngModel)]="searchByCat" (keyup)="searchByColumnId(headers.id)" class="form-control" placeholder="Search Items" />
+        </td>
       </tr> -->
 
 
       <tr *ngFor="let contents of tableFields.data | category : searchText">
         <td *ngFor="let headers of tableFields.headers">
           <p *ngIf="!headers.hasChildren"> {{contents[headers.id]}} </p>
-          
+
           <p *ngIf="headers.hasChildren">
             <td *ngFor="let childHeader of headers.children; let i = index">
               {{contents[headers.id][i][childHeader.id] }}

@@ -11,6 +11,7 @@ import { DatagridComponent } from './datagrid/datagrid.component';
 import { DatagridService } from './datagrid.service';
 import { OrderByPipe } from './directives/orderby.pipe';
 import { SearchCategory } from './directives/searchcategory.pipe';
+import { SearchByCategory } from './directives/searchbycategory.pipe';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { SearchCategory } from './directives/searchcategory.pipe';
     CustomerComponent,
     DatagridComponent,
     OrderByPipe,
-    SearchCategory
+    SearchCategory,
+    SearchByCategory
   ],
   imports: [
     BrowserModule,

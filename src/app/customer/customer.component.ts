@@ -49,9 +49,9 @@ export class CustomerComponent implements OnInit {
         this.tableContent.totalRecords = res.length;
         for (let i = 0; i <= res.length; i++) {
           this.tableContent.data[i]['parentCol'] = [
-            { 'child1': 'Child1' },
-            { 'child2': 'Child2' },
-            { 'child3': 'Child3' },
+            { 'child1': i },
+            { 'child2': 'Child ' + i },
+            { 'child3': 'Child ' + i },
           ];
         }
       }
